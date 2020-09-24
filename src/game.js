@@ -1,4 +1,6 @@
 "use strict"; // jshint ;_;
+import {playSound, numAndDeclOfNum, initField} from "./helper";
+
 function stub() {
 }
 
@@ -7,24 +9,12 @@ function randomIndex(length) {
     return Math.floor(Math.random() * length);
 }
 
-const playSound = (elem) => {
-    if (!elem) return;
-    elem.play();
-}
-
-function declOfNum(number, titles) {
-    const cases = [2, 0, 1, 1, 1, 2];
-    return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
-}
-
-function numAndDeclOfNum(number, titles) {
-    return number + " " + declOfNum(number, titles);
-}
 
 function engine(size) {
     let moveCount = 0;
-    let isMouseMove = true;
+    let isMouseMove = false;
     const inField = (x) => x >= 0 && x < size;
+    let ramrod = -1;
     const mouse = function () {
         let posX = 2;
         const mouseDirections = [-1, 1];
@@ -65,10 +55,10 @@ function engine(size) {
             posX = posX + d;
             ++moveCount;
             isMouseMove = false;
+            ramrod = -1;
         }
         return {getPos: getPos, tryMove: tryMove, move: move}
     }();
-    let ramrod = -1;
 
     const getMoveCount = () => moveCount;
 
@@ -122,8 +112,14 @@ function draw(presenter, box, message, settings) {
         const tile = box.childNodes[i];
         tile.className = 'cell';
         if (presenter.isRamrodPos(i)) {
-            tile.innerHTML = "<span>&#128296;</span>";
-            tile.classList.add('flip');
+            if (presenter.isWin()) {
+                // collisionSymbol
+                tile.innerHTML = "<span>&#128165;</span>";
+            } else {
+                // &#128371;
+                tile.innerHTML = "<span>&#128371;</span>";
+                // tile.innerHTML = "<span>&#128296;</span>";
+            }
         } else if (presenter.isMousePos(i)) {
             if (settings.mouse) {
                 const horseIndex = parseInt(settings.mouse, 10) - 1;
@@ -140,31 +136,17 @@ function draw(presenter, box, message, settings) {
 
 export default function game(window, document, settings) {
 
-    const box = document.getElementsByClassName("box")[0];
+    const box = document.querySelector(".box");
     const message = document.querySelector(".message");
-    const overlay = document.getElementsByClassName("overlay")[0];
-    const close = document.getElementsByClassName("close")[0];
+    const overlay = document.querySelector(".overlay");
+    const close = document.querySelector(".close");
     const tada = document.getElementById("tada");
 
     document.documentElement.style.setProperty('--field-size', settings.size);
 
     const handlers = {
-        'playerMove': stub,
-        'enemyMove': stub,
-        'meMove': stub,
-        'aiMove': stub,
-        'aiHint': stub,
         'gameover': stub
     }
-
-    function initField(fieldSize, className, elem) {
-        for (let i = 0; i < fieldSize; i++) {
-            const cell = document.createElement('div');
-            cell.className = className;
-            elem.appendChild(cell);
-        }
-    }
-
 
     const g = engine(settings.size);
 
@@ -194,9 +176,8 @@ export default function game(window, document, settings) {
         setTimeout(step, 200);
     }
 
-    initField(g.size, 'cell', box);
+    initField(g.size, 'cell', box, document);
     drawWithAnimation();
-    nextStep();
 
     const handleBox = function (evt) {
         const ind = handleClick(evt, box);
