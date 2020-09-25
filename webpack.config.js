@@ -88,6 +88,7 @@ module.exports = (env, argv) => {
             new CopyPlugin({
                 patterns: [
                     { from: 'src/images', to: './images' },
+                    { from: 'src/rules.html', to: './' },
                     { from: 'github', to: './' }
                 ],
             })

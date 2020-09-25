@@ -15,6 +15,58 @@ function engine(size) {
     let isMouseMove = false;
     const inField = (x) => x >= 0 && x < size;
     let ramrod = -1;
+    let iswin = false;
+    let showMousePos = false;
+    const quasiMouse = function () {
+        let prevPos = 3;
+        let positions = [2, 3];
+
+        const add = (positions, p) => {
+            if (inField(p)) {
+                positions.push(p);
+            }
+        }
+
+        const isFirstOrLast = (ind) => {
+            return ind === 0 || ind === size;
+        }
+
+        const calcScore = (ind) => {
+            if (!inField(ind)) return 0;
+            if (isFirstOrLast(ind)) return 1;
+            return 2;
+        }
+
+        const hit = function (r) {
+            const candidates = positions.filter((c) => c !== r);
+            let maxScore = 0;
+            let maxInd = -1;
+            ++moveCount;
+            for (const c of candidates) {
+                const newScore = calcScore(c-1) + calcScore(c+1);
+                if (maxScore < newScore) {
+                    maxScore = newScore;
+                    maxInd = c;
+                }
+            }
+            positions = [];
+            if (maxScore === 0) {
+                iswin = true;
+                return;
+            }
+            prevPos = maxInd;
+            add(positions, prevPos + 1);
+            add(positions, prevPos - 1);
+        }
+
+        const getPrevPos = () => prevPos;
+        const isWin = () => positions.length === 0;
+        return {
+            getPrevPos: getPrevPos,
+            hit: hit,
+            isWin: isWin
+        }
+    }();
     const mouse = function () {
         let posX = 2;
         const mouseDirections = [-1, 1];
@@ -62,7 +114,7 @@ function engine(size) {
 
     const getMoveCount = () => moveCount;
 
-    const isWin = () => mouse.getPos() === ramrod && isMouseMove;
+    const isWin = () => iswin;
 
     const tryMoveToIndex = (i) => {
         if (isMouseMove) {
@@ -77,7 +129,16 @@ function engine(size) {
     }
 
     const isRamrodPos = (i) => i === ramrod;
-    const isMousePos = (i) => i === mouse.getPos();
+    const isMousePos = (i) => !iswin && showMousePos && i === quasiMouse.getPrevPos();
+    const setShowMousePos = (b) => {
+        showMousePos = b;
+        isMouseMove = false;
+        ramrod = -1;
+    };
+    const mouseMove = () => {
+        quasiMouse.hit(ramrod);
+        showMousePos = true;
+    }
 
     return {
         size: size,
@@ -86,7 +147,9 @@ function engine(size) {
         tryMoveToIndex: tryMoveToIndex,
         getMoveCount: getMoveCount,
         isRamrodPos: isRamrodPos,
-        isMousePos: isMousePos
+        isMousePos: isMousePos,
+        setShowMousePos: setShowMousePos,
+        mouseMove: mouseMove
     }
 }
 
@@ -117,8 +180,8 @@ function draw(presenter, box, message, settings) {
                 tile.innerHTML = "<span>&#128165;</span>";
             } else {
                 // &#128371;
-                tile.innerHTML = "<span>&#128371;</span>";
-                // tile.innerHTML = "<span>&#128296;</span>";
+                // tile.innerHTML = "<span>&#128371;</span>";
+                tile.innerHTML = "<span>&#128296;</span>";
             }
         } else if (presenter.isMousePos(i)) {
             if (settings.mouse) {
@@ -170,8 +233,14 @@ export default function game(window, document, settings) {
 
     function nextStep() {
         function step() {
-            g.mouse.move();
+            g.mouseMove();
             drawWithAnimation();
+            if (!g.isWin()) {
+                setTimeout(() => {
+                    g.setShowMousePos(false);
+                    drawWithAnimation();
+                }, 200)
+            }
         }
         setTimeout(step, 200);
     }
