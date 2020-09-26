@@ -1,5 +1,5 @@
 export default {
-    mouse: 1,
+    mouse: 0,
     size: 5,
     sound: false
 }

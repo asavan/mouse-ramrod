@@ -3,14 +3,22 @@
   "version": "1.0.0",
   "private": true,
   "description": "Deadly game of mouse and ramrod",
+  "ava": {
+    "require": [
+      "esm"
+    ]
+  },
   "scripts": {
     "start": "webpack-dev-server --mode development --color",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "test": "ava"
   },
   "devDependencies": {
+    "ava": "^3.12.1",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.0.3",
     "css-loader": "^4.2.0",
+    "esm": "^3.2.25",
     "html-webpack-plugin": "^4.3.0",
     "mini-css-extract-plugin": "^0.9.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
