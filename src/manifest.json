@@ -1,0 +1,16 @@
+{
+    "name": "Mouse vs ramrod game",
+	"short_name": "mouse-ramrod",
+    "icons": [
+        {
+            "src": "./images/antimouse1.jpg",
+            "sizes": "300x300",
+            "type": "image/jpg"
+        }
+
+    ],
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "start_url": "./",
+    "display": "standalone"
+}
