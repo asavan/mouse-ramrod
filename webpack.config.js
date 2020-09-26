@@ -7,7 +7,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const webpack = require('webpack');
 const HashOutput = require('webpack-plugin-hash-output');
-const {GenerateSW} = require('workbox-webpack-plugin');
+const {InjectManifest} = require('workbox-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
@@ -25,7 +25,7 @@ module.exports = (env, argv) => {
         entry: {main: "./src/index.js"},
         output: {
             path: path.resolve(__dirname, "docs"),
-            filename: devMode ? "[name].js" : "[name].[chunkhash].js",
+            filename: devMode ? "[name].js" : "[name].[chunkhash].min.js",
             // publicPath: devMode ? "/" : "./docs/"
             // publicPath: "./dist/"
         },
@@ -73,15 +73,19 @@ module.exports = (env, argv) => {
                 defaultAttribute: 'async'
             }),
             new MiniCssExtractPlugin({
-                filename: devMode ? '[name].css' : '[name].[contenthash].css'
+                filename: devMode ? '[name].css' : '[name].[contenthash].min.css'
             }),
-            // ...(devMode ? [] : [new GenerateSW({
-            //     swDest: '../sw.js',
-            //     // these options encourage the ServiceWorkers to get in there fast
-            //     // and not allow any straggling "old" SWs to hang around
-            //     clientsClaim: true,
-            //     skipWaiting: true,
-            // })]),
+            ...(devMode ? [] : [new InjectManifest({
+                swDest: './sw.js',
+                swSrc: './src/sw.js',
+                exclude: [
+                    /index\.html$/,
+                    /CNAME$/,
+                    /\.nojekyll$/,
+                    /_config\.yml$/,
+                    /^.*well-known\/.*$/,
+                ]
+            })]),
             new webpack.DefinePlugin({
                 __USE_SERVICE_WORKERS__: !devMode
             }),

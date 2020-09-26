@@ -1,4 +1,33 @@
 "use strict";
+
+function install(window, document, settings) {
+    const btnAdd = document.getElementById('butInstall');
+    let deferredPrompt;
+    btnAdd.addEventListener('click', (e) => {
+        // hide our user interface that shows our A2HS button
+        // btnAdd.setAttribute('disabled', true);
+        btnAdd.classList.add("hidden");
+        // Show the prompt
+        deferredPrompt.prompt();
+        // Wait for the user to respond to the prompt
+        deferredPrompt.userChoice.then((resp) => {
+            console.log(JSON.stringify(resp));
+        });
+    });
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevent the mini-info bar from appearing.
+        e.preventDefault();
+        // Stash the event so it can be triggered later.
+        deferredPrompt = e;
+        // Update UI notify the user they can add to home screen
+        // btnAdd.removeAttribute('disabled');
+        if (settings && settings.showInstall) {
+            btnAdd.classList.remove("hidden");
+        }
+    });
+}
+
 function stringToBoolean(string){
     switch(string.toLowerCase().trim()){
         case "true": case "yes": case "1": return true;
@@ -17,6 +46,12 @@ function starter(window, document, settings, f) {
             settings[key] = stringToBoolean(value);
         } else {
             settings[key] = value;
+        }
+    }
+    if (__USE_SERVICE_WORKERS__) {
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js', {scope: './'});
+            install(window, document, settings);
         }
     }
     f(window, document, settings);

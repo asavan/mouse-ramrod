@@ -49,6 +49,9 @@ function draw(presenter, box, message, settings) {
             tile.innerHTML = ""
         }
     }
+    if (message && presenter.getMoveCount()) {
+        message.textContent = numAndDeclOfNum(presenter.getMoveCount(), ['ход', 'хода', 'ходов']);
+    }
 }
 
 export default function game(window, document, settings) {
