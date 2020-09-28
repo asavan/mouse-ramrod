@@ -5,8 +5,6 @@ import {engine} from "./engine.js";
 function stub() {
 }
 
-
-
 const handleClick = function (evt, parent) {
     const getIndex = function (e, parent) {
         const target = e.target || e.srcElement;
@@ -39,10 +37,10 @@ function draw(presenter, box, message, settings) {
             }
         } else if (presenter.isMousePos(i)) {
             if (settings.mouse) {
-                const horseIndex = parseInt(settings.mouse, 10) - 1;
-                const horseText = avMice[horseIndex];
-                if (horseText) {
-                    tile.innerHTML = `<span>${horseText}</span>`;
+                const mouseInd = settings.mouse - 1;
+                const mouseText = avMice[mouseInd];
+                if (mouseText) {
+                    tile.innerHTML = `<span>${mouseText}</span>`;
                 }
             }
         } else {
