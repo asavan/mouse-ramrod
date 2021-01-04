@@ -6,7 +6,6 @@ const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const webpack = require('webpack');
-const HashOutput = require('webpack-plugin-hash-output');
 const {InjectManifest} = require('workbox-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -25,22 +24,14 @@ module.exports = (env, argv) => {
         entry: {main: "./src/index.js"},
         output: {
             path: path.resolve(__dirname, "docs"),
-            filename: devMode ? "[name].js" : "[name].[chunkhash].min.js",
-            // publicPath: devMode ? "/" : "./docs/"
-            // publicPath: "./dist/"
+            filename: devMode ? "[name].js" : "[name].[contenthash].min.js"
         },
         module: {
             rules: [
                 {
                     test: /\.css$/i,
                     use: [{
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            // you can specify a publicPath here
-                            // by default it uses publicPath in webpackOptions.output
-                            // publicPath: '../',
-                            hmr: devMode,
-                        },
+                        loader: MiniCssExtractPlugin.loader
                     }, 'css-loader'],
                 },
                 {
@@ -61,7 +52,6 @@ module.exports = (env, argv) => {
         },
         plugins: [
             new CleanWebpackPlugin(),
-            new HashOutput(),
             new HtmlWebpackPlugin({
                 template: "./src/index.html",
                 minify: false,
