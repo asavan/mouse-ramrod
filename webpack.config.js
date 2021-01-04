@@ -3,11 +3,10 @@ const path = require("path");
 const os = require('os');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserJSPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const webpack = require('webpack');
 const {InjectManifest} = require('workbox-webpack-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 // process.traceDeprecation = true;
@@ -48,19 +47,17 @@ module.exports = (env, argv) => {
                         drop_console: true
                     }
                 }
-            }), new OptimizeCSSAssetsPlugin({})],
+            }), new CssMinimizerPlugin()],
         },
         plugins: [
             new CleanWebpackPlugin(),
             new HtmlWebpackPlugin({
                 template: "./src/index.html",
                 minify: false,
+                scriptLoading: 'defer',
                 // filename: devMode ? "./index.html" : "../index.html",
                 inject: 'head'
                 // filename: 'index.html'
-            }),
-            new ScriptExtHtmlWebpackPlugin({
-                defaultAttribute: 'async'
             }),
             new MiniCssExtractPlugin({
                 filename: devMode ? '[name].css' : '[name].[contenthash].min.css'
