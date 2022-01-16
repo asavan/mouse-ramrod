@@ -1,10 +1,10 @@
-export function idealMouse(size) {
+"use strict";
+export default function idealMouse(size) {
     const inField = (x) => x >= 0 && x < size;
     let positions = [];
     for (let i = 0; i < size; ++i) {
         positions.push(i);
     }
-    let hits = [];
     const add = (positions, p) => {
         if (inField(p)) {
             if (!positions.includes(p)) {
@@ -13,7 +13,6 @@ export function idealMouse(size) {
         }
     }
     const hit = (r) => {
-        hits.push(r);
         const candidates = positions.filter((c) => c !== r);
         const newPositions = [];
         for (const c of candidates) {

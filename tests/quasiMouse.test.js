@@ -1,5 +1,5 @@
 import test from 'ava';
-import quasiMouse from "../src/quasiMouse";
+import quasiMouse from "../src/quasiMouse.js";
 
 function testFunc(t, hits, expected) {
     const mouse = quasiMouse(3);

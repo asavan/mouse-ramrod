@@ -1,4 +1,4 @@
-import {idealMouse} from "./idealMouse.js";
+import idealMouse from "./idealMouse.js";
 import quasiMouseFunc from "./quasiMouse.js";
 
 export function engine(size, useIdealMouse) {

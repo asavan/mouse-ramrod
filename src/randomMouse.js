@@ -3,14 +3,17 @@ function randomIndex(length) {
     return Math.floor(Math.random() * length);
 }
 
+function randomElem(arr) {
+    return arr[randomIndex(arr.length)];
+}
+
 export default function randomMouse(size) {
     const inField = (x) => x >= 0 && x < size;
-    let posX = 2;
+    let posX = randomIndex(size);
     const mouseDirections = [-1, 1];
-    let lastMoveIndex = -1;
     const getPos = () => posX;
     const tryMove = (x) => {
-        if (Math.abs(posX - x) <= 1) {
+        if (Math.abs(posX - x) === 1) {
             if (inField(x)) {
                 posX = x;
                 return true;
@@ -20,19 +23,14 @@ export default function randomMouse(size) {
     }
 
     const move = function () {
-        const availableInd = [];
-        let ind = 0;
+        const availablePos = [];
         for (const d of mouseDirections) {
-            if (inField(posX + d)) {
-                availableInd.push(ind)
+            const new_pos = posX + d;
+            if (inField(new_pos)) {
+                availablePos.push(new_pos);
             }
-            ++ind;
         }
-
-        ind = availableInd[randomIndex(availableInd.length)];
-        let d = mouseDirections[ind];
-        lastMoveIndex = ind;
-        posX = posX + d;
+        posX = randomElem(availablePos);
     }
     return {getPos: getPos, tryMove: tryMove, move: move}
 }

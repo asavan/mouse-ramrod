@@ -1,17 +1,19 @@
 "use strict";
 export default function quasiMouse(size) {
     const inField = (x) => x >= 0 && x < size;
-    let prevPos = size-1;
-    let positions = [Math.floor((size-1)/2), Math.floor((size-1)/2) + 1];
+    let prevPos = Math.floor((size - 1) / 2);
+    let positions = [];
 
     const add = (positions, p) => {
         if (inField(p)) {
             positions.push(p);
         }
     }
+    add(positions, prevPos);
+    add(positions, prevPos + 1);
 
     const isFirstOrLast = (ind) => {
-        return ind === 0 || ind === size;
+        return ind === 0 || (ind === (size - 1));
     }
 
     const calcScore = (ind) => {
@@ -26,7 +28,7 @@ export default function quasiMouse(size) {
         let maxInd = -1;
 
         for (const c of candidates) {
-            const newScore = calcScore(c-1) + calcScore(c+1);
+            const newScore = calcScore(c - 1) + calcScore(c + 1);
             if (maxScore < newScore) {
                 maxScore = newScore;
                 maxInd = c;
