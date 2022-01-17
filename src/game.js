@@ -1,6 +1,9 @@
 "use strict"; // jshint ;_;
 import {playSound, numAndDeclOfNum, initField} from "./helper.js";
-import {engine} from "./engine.js";
+import engine from "./engine.js";
+import idealMouse from "./idealMouse.js";
+import quasiMouseFunc from "./quasiMouse.js";
+import randomMouse from "./randomMouse.js";
 
 function stub() {
 }
@@ -66,7 +69,9 @@ export default function game(window, document, settings) {
         'gameover': stub
     }
 
-    const g = engine(settings.size, settings.mouse === 0);
+    const miceFunc = [idealMouse, quasiMouseFunc, quasiMouseFunc, randomMouse, quasiMouseFunc, idealMouse, randomMouse, quasiMouseFunc];
+
+    const g = engine(settings.size, miceFunc[settings.mouse]);
 
     function onGameEnd() {
         const content = overlay.querySelector('.content');
@@ -81,8 +86,7 @@ export default function game(window, document, settings) {
     function drawWithAnimation() {
         draw(g, box, message, settings);
         if (g.isWin()) {
-            // should never happen
-            onGameEnd();
+            setTimeout(onGameEnd, 200);
         }
     }
 
@@ -97,7 +101,7 @@ export default function game(window, document, settings) {
                 }, 200)
             }
         }
-        setTimeout(step, 200);
+        setTimeout(step, 60);
     }
 
     initField(g.size, 'cell', box, document);
@@ -106,10 +110,7 @@ export default function game(window, document, settings) {
     const handleBox = function (evt) {
         const ind = handleClick(evt, box);
         if (g.tryMoveToIndex(ind)) {
-            drawWithAnimation();
-            if (!g.isWin()) {
-                nextStep();
-            }
+            nextStep();
         }
     };
 

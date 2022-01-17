@@ -1,15 +1,11 @@
-import idealMouse from "./idealMouse.js";
-import quasiMouseFunc from "./quasiMouse.js";
-
-export function engine(size, useIdealMouse) {
+export default function engine(size, mouseFunc) {
     let moveCount = 0;
     let isMouseMove = false;
     let ramrod = -1;
     let iswin = false;
     let showMousePos = false;
     const inField = (x) => x >= 0 && x < size;
-    const quasiMouse = quasiMouseFunc(size);
-    const iMouse = idealMouse(size);
+    const iMouse = mouseFunc(size);
 
     const getMoveCount = () => moveCount;
 
@@ -28,7 +24,8 @@ export function engine(size, useIdealMouse) {
     }
 
     const isRamrodPos = (i) => i === ramrod;
-    const isMousePos = (i) => !iswin && showMousePos && i === quasiMouse.getPrevPos();
+    const isMousePos = (i) => showMousePos && iMouse.isMousePos(i);
+
     const setShowMousePos = (b) => {
         showMousePos = b;
         isMouseMove = false;
@@ -40,12 +37,8 @@ export function engine(size, useIdealMouse) {
             return;
         }
         ++moveCount;
-        if (useIdealMouse) {
-            iswin = iMouse.hit(ramrod);
-        } else {
-            iswin = quasiMouse.hit(ramrod);
-            showMousePos = true;
-        }
+        iswin = iMouse.hit(ramrod);
+        showMousePos = true;
     }
 
     return {

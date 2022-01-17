@@ -23,7 +23,7 @@ export default function quasiMouse(size) {
     }
 
     const hit = function (r) {
-        const candidates = positions.filter((c) => (c !== r) && inField(c));
+        const candidates = positions.filter((c) => (c !== r));
         let maxScore = 0;
         let maxInd = -1;
 
@@ -36,6 +36,7 @@ export default function quasiMouse(size) {
         }
         positions = [];
         if (maxScore === 0) {
+            prevPos = r;
             return true;
         }
         prevPos = maxInd;
@@ -46,9 +47,11 @@ export default function quasiMouse(size) {
 
     const getPrevPos = () => prevPos;
     const isWin = () => positions.length === 0;
+    const isMousePos = (i) => i === getPrevPos();
     return {
         getPrevPos: getPrevPos,
         hit: hit,
-        isWin: isWin
+        isWin: isWin,
+        isMousePos: isMousePos
     }
 }
