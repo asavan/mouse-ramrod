@@ -2,7 +2,7 @@
 
 function install(window, document, settings) {
     const btnAdd = document.getElementById('butInstall');
-    let deferredPrompt;
+    let deferredPrompt = null;
     btnAdd.addEventListener('click', (e) => {
         // hide our user interface that shows our A2HS button
         // btnAdd.setAttribute('disabled', true);
@@ -16,13 +16,9 @@ function install(window, document, settings) {
     });
 
     window.addEventListener('beforeinstallprompt', (e) => {
-        // Prevent the mini-info bar from appearing.
         e.preventDefault();
-        // Stash the event so it can be triggered later.
         deferredPrompt = e;
-        // Update UI notify the user they can add to home screen
-        // btnAdd.removeAttribute('disabled');
-        if (settings && settings.showInstall) {
+        if (settings && settings.install) {
             btnAdd.classList.remove("hidden");
         }
     });
@@ -54,7 +50,11 @@ function starter(window, document, settings, f) {
             install(window, document, settings);
         }
     }
-    f(window, document, settings);
+    const g = f(window, document, settings);
+    g.on("gameover", (score) => {
+        const btnAdd = document.getElementById('butInstall');
+        btnAdd.classList.remove("hidden2");
+    });
 }
 
 function launch(f, window, document, settings, afterUrlParse) {
