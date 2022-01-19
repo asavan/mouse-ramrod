@@ -42,7 +42,6 @@ export default function engine(size, mouseFunc) {
     }
 
     return {
-        size: size,
         isWin: isWin,
         tryMoveToIndex: tryMoveToIndex,
         getMoveCount: getMoveCount,
