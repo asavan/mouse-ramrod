@@ -12,9 +12,15 @@
             font-size: 1.9rem;
         }
 
-        p {
+        ul {
+            list-style-position: inside;
+            list-style-type: disc;
             margin-top: 0;
+            margin-block-end: 1em;
             width: 60vw;
+        }
+        li:not(:last-child) {
+            margin-bottom: 20px;
         }
         .flip-card {
             background-color: transparent;
@@ -66,18 +72,27 @@
                 display: none;
             }
         }
+        @media (max-width: 400px) {
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 1.3rem;
+            }
+            .flip-card {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
 
 <div class="row">
-<p>
-    Перед вами пять мышиных норок, расположенных в ряд. <br>
-    В одной из этих норок спряталась мышка. <br>
-    Вы можете засунуть шомпол в любую из норок и попробовать убить мышку. <br>
-    Мышка боится шомпола, поэтому после каждой попытки обязательно перебегает в соседнюю норку справа или слева.<br>
-    Можете ли вы гарантированно размазжить мышку?
-</p>
+<ul>
+    <li>Перед вами пять мышиных норок, расположенных в ряд.</li>
+    <li>В одной из этих норок спряталась мышка. </li>
+    <li>Вы можете засунуть шомпол в любую из норок и попробовать убить мышку.</li>
+    <li>Мышка боится шомпола, поэтому после каждой попытки обязательно перебегает в соседнюю норку справа или слева.</li>
+    <li>Можете ли вы гарантированно размозжить мышку?</li>
+</ul>
 
 <div class="flip-card">
     <div class="flip-card-inner">
