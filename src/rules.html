@@ -12,9 +12,15 @@
             font-size: 1.9rem;
         }
 
+        @counter-style mices {
+            system: cyclic;
+            symbols: "\1F573" "\1F42D" "\1F528" "\2194\FE0F" "\26B0\FE0F";
+            suffix: "  ";
+        }
+
         ul {
             list-style-position: inside;
-            list-style-type: disc;
+            list-style-type: mices;
             margin-top: 0;
             margin-block-end: 1em;
             width: 60vw;
@@ -65,7 +71,7 @@
             display: block;
         }
         @media (max-width: 600px) {
-            body {
+            ul {
                 font-size: 1.5rem;
             }
             .flip-card {
@@ -73,9 +79,9 @@
             }
         }
         @media (max-width: 400px) {
-            body {
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 1.3rem;
+            ul {
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 1rem;
             }
             .flip-card {
                 display: none;
