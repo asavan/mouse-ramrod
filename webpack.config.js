@@ -1,14 +1,15 @@
-const path = require("path");
-const os = require('os');
+import path from 'path';
+import os from 'os'
+import { fileURLToPath } from 'url';
 
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TerserJSPlugin = require('terser-webpack-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const webpack = require('webpack');
-const {InjectManifest} = require('workbox-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import TerserJSPlugin from 'terser-webpack-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import {InjectManifest} from 'workbox-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin'
+import webpack from 'webpack'
+
 
 // process.traceDeprecation = true;
 
@@ -16,15 +17,17 @@ const getLocalExternalIP = () => [].concat(...Object.values(os.networkInterfaces
     .filter(details => details.family === 'IPv4' && !details.internal)
     .pop().address
 
-module.exports = (env, argv) => {
+const config = (env, argv) => {
     const devMode = !argv || (argv.mode !== 'production');
-    let addr = getLocalExternalIP() || '0.0.0.0';
+    const addr = getLocalExternalIP() || '0.0.0.0';
+    const dirname = path.dirname(fileURLToPath(import.meta.url));
     return {
 
-        entry: {main: "./src/index.js"},
+        entry: {main: ["./src/index.js", "./src/css/style.css"]},
         output: {
-            path: path.resolve(__dirname, "docs"),
-            filename: devMode ? "[name].js" : "[name].[contenthash].min.js"
+            path: path.resolve(dirname, "docs"),
+            filename: devMode ? "[name].js" : "[name].[contenthash].min.js",
+            clean: true
         },
         module: {
             rules: [
@@ -51,7 +54,6 @@ module.exports = (env, argv) => {
             }), new CssMinimizerPlugin()],
         },
         plugins: [
-            new CleanWebpackPlugin(),
             new HtmlWebpackPlugin({
                 template: "./src/index.html",
                 minify: false,
@@ -99,3 +101,5 @@ module.exports = (env, argv) => {
         }
     }
 };
+
+export default config;
