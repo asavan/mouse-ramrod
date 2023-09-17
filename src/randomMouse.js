@@ -30,7 +30,7 @@ export default function randomMouse(size) {
         }
         posX = randomElem(availablePos);
         return false;
-    }
+    };
     const isMousePos = (i) => i === prevPos;
-    return {getPos: getPos, hit: hit, isMousePos: isMousePos}
+    return {getPos: getPos, hit: hit, isMousePos: isMousePos};
 }

@@ -1,4 +1,4 @@
-import test from 'ava';
+import test from "ava";
 import quasiMouse from "../src/quasiMouse.js";
 
 function testFunc(t, hits, expected) {
@@ -10,7 +10,7 @@ function testFunc(t, hits, expected) {
 }
 
 
-test('hit in 3', (t) => {
+test("hit in 3", (t) => {
     const hits = [3];
     testFunc(t, hits, 1);
 });

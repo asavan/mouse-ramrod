@@ -17,7 +17,7 @@ const handleClick = function (evt, parent) {
     };
 
     evt.preventDefault();
-    if (!evt.target.classList.contains('cell')) {
+    if (!evt.target.classList.contains("cell")) {
         return -1;
     }
     return getIndex(evt, parent);
@@ -55,7 +55,7 @@ function draw(presenter, box, message, settings) {
         }
     }
     if (message && presenter.getMoveCount()) {
-        message.textContent = numAndDeclOfNum(presenter.getMoveCount(), ['ход', 'хода', 'ходов']);
+        message.textContent = numAndDeclOfNum(presenter.getMoveCount(), ["ход", "хода", "ходов"]);
     }
 }
 
@@ -67,23 +67,23 @@ export default function game(window, document, settings) {
     const close = document.querySelector(".close");
     const tada = document.getElementById("tada");
 
-    document.documentElement.style.setProperty('--field-size', settings.size);
+    document.documentElement.style.setProperty("--field-size", settings.size);
 
     const handlers = {
-        'gameover': stub,
-        'mouse': stub,
-        'ramrod': stub
-    }
+        "gameover": stub,
+        "mouse": stub,
+        "ramrod": stub
+    };
 
     const miceFunc = [idealMouse, quasiMouseFunc, quasiMouseFunc, randomMouse, quasiMouseFunc, idealMouse, randomMouse, quasiMouseFunc];
 
     const g = engine(settings.size, miceFunc[settings.mouse]);
 
     function onGameEnd() {
-        const content = overlay.querySelector('.content');
-        content.textContent = "За  " + numAndDeclOfNum(g.getMoveCount(), ['ход', 'хода', 'ходов']);
-        overlay.classList.add('show');
-        handlers['gameover'](g.getMoveCount());
+        const content = overlay.querySelector(".content");
+        content.textContent = "За  " + numAndDeclOfNum(g.getMoveCount(), ["ход", "хода", "ходов"]);
+        overlay.classList.add("show");
+        handlers["gameover"](g.getMoveCount());
         if (settings.sound) {
             playSound(tada);
         }
@@ -104,14 +104,14 @@ export default function game(window, document, settings) {
                 setTimeout(() => {
                     g.setShowMousePos(false);
                     drawWithAnimation();
-                }, 200)
+                }, 200);
             }
         }
 
         setTimeout(step, 60);
     }
 
-    initField(settings.size, 'cell', box, document);
+    initField(settings.size, "cell", box, document);
     drawWithAnimation();
 
     const handleBox = function (evt) {
@@ -133,5 +133,5 @@ export default function game(window, document, settings) {
 
     return {
         on: on
-    }
+    };
 }

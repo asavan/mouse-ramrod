@@ -8,19 +8,19 @@ export default function quasiMouse(size) {
         if (inField(p)) {
             positions.push(p);
         }
-    }
+    };
     add(positions, prevPos);
     add(positions, prevPos + 1);
 
     const isFirstOrLast = (ind) => {
         return ind === 0 || (ind === (size - 1));
-    }
+    };
 
     const calcScore = (ind) => {
         if (!inField(ind)) return 0;
         if (isFirstOrLast(ind)) return 1;
         return 2;
-    }
+    };
 
     const hit = function (r) {
         const candidates = positions.filter((c) => (c !== r));
@@ -43,7 +43,7 @@ export default function quasiMouse(size) {
         add(positions, prevPos + 1);
         add(positions, prevPos - 1);
         return false;
-    }
+    };
 
     const getPrevPos = () => prevPos;
     const isWin = () => positions.length === 0;
@@ -53,5 +53,5 @@ export default function quasiMouse(size) {
         hit: hit,
         isWin: isWin,
         isMousePos: isMousePos
-    }
+    };
 }

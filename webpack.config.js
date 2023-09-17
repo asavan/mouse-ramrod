@@ -1,25 +1,25 @@
-import path from 'path';
-import os from 'os'
-import { fileURLToPath } from 'url';
+import path from "path";
+import os from "os";
+import { fileURLToPath } from "url";
 
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import TerserJSPlugin from 'terser-webpack-plugin';
-import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
-import {InjectManifest} from 'workbox-webpack-plugin';
-import CopyPlugin from 'copy-webpack-plugin'
-import webpack from 'webpack'
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import TerserJSPlugin from "terser-webpack-plugin";
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
+import {InjectManifest} from "workbox-webpack-plugin";
+import CopyPlugin from "copy-webpack-plugin";
+import webpack from "webpack";
 
 
 // process.traceDeprecation = true;
 
 const getLocalExternalIP = () => [].concat(...Object.values(os.networkInterfaces()))
-    .filter(details => details.family === 'IPv4' && !details.internal)
-    .pop().address
+    .filter(details => details.family === "IPv4" && !details.internal)
+    .pop().address;
 
 const config = (env, argv) => {
-    const devMode = !argv || (argv.mode !== 'production');
-    const addr = getLocalExternalIP() || '0.0.0.0';
+    const devMode = !argv || (argv.mode !== "production");
+    const addr = getLocalExternalIP() || "0.0.0.0";
     const dirname = path.dirname(fileURLToPath(import.meta.url));
     return {
 
@@ -35,11 +35,11 @@ const config = (env, argv) => {
                     test: /\.css$/i,
                     use: [{
                         loader: MiniCssExtractPlugin.loader
-                    }, 'css-loader'],
+                    }, "css-loader"],
                 },
                 {
                     test: /worker\.js$/,
-                    use: { loader: 'worker-loader' },
+                    use: { loader: "worker-loader" },
                 }
             ]
         },
@@ -57,17 +57,17 @@ const config = (env, argv) => {
             new HtmlWebpackPlugin({
                 template: "./src/index.html",
                 minify: false,
-                scriptLoading: 'defer',
+                scriptLoading: "defer",
                 // filename: devMode ? "./index.html" : "../index.html",
-                inject: 'head'
+                inject: "head"
                 // filename: 'index.html'
             }),
             new MiniCssExtractPlugin({
-                filename: devMode ? '[name].css' : '[name].[contenthash].min.css'
+                filename: devMode ? "[name].css" : "[name].[contenthash].min.css"
             }),
             ...(devMode ? [] : [new InjectManifest({
-                swDest: './sw.js',
-                swSrc: './src/sw.js',
+                swDest: "./sw.js",
+                swSrc: "./src/sw.js",
                 exclude: [
                     /index\.html$/,
                     /CNAME$/,
@@ -81,10 +81,10 @@ const config = (env, argv) => {
             }),
             new CopyPlugin({
                 patterns: [
-                    { from: 'src/images', to: './images' },
-                    { from: 'src/rules.html', to: './' },
-                    { from: 'src/manifest.json', to: './' },
-                    { from: 'github', to: './' }
+                    { from: "src/images", to: "./images" },
+                    { from: "src/rules.html", to: "./" },
+                    { from: "src/manifest.json", to: "./" },
+                    { from: "github", to: "./" }
                 ],
             })
         ],
@@ -99,7 +99,7 @@ const config = (env, argv) => {
             // clientLogLevel: 'debug',
             // watchContentBase: true,
         }
-    }
+    };
 };
 
 export default config;

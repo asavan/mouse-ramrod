@@ -5,4 +5,4 @@ export default {
     size: 5,
     sound: false,
     install: true
-}
+};

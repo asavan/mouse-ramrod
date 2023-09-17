@@ -21,7 +21,7 @@ export default function engine(size, mouseFunc) {
             return true;
         }
         return false;
-    }
+    };
 
     const isRamrodPos = (i) => i === ramrod;
     const isMousePos = (i) => showMousePos && iMouse.isMousePos(i);
@@ -39,7 +39,7 @@ export default function engine(size, mouseFunc) {
         ++moveCount;
         iswin = iMouse.hit(ramrod);
         showMousePos = true;
-    }
+    };
 
     return {
         isWin: isWin,
@@ -49,5 +49,5 @@ export default function engine(size, mouseFunc) {
         isMousePos: isMousePos,
         setShowMousePos: setShowMousePos,
         mouseMove: mouseMove
-    }
+    };
 }

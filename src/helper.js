@@ -1,9 +1,10 @@
 "use strict";
 
-function install(window, document, settings) {
-    const btnAdd = document.getElementById('butInstall');
+export function install(window, document, settings) {
+    const btnAdd = document.getElementById("butInstall");
     let deferredPrompt = null;
-    btnAdd.addEventListener('click', (e) => {
+    btnAdd.addEventListener("click", (e) => {
+        e.preventDefault();
         // hide our user interface that shows our A2HS button
         // btnAdd.setAttribute('disabled', true);
         btnAdd.classList.add("hidden");
@@ -15,7 +16,7 @@ function install(window, document, settings) {
         });
     });
 
-    window.addEventListener('beforeinstallprompt', (e) => {
+    window.addEventListener("beforeinstallprompt", (e) => {
         e.preventDefault();
         deferredPrompt = e;
         if (settings && settings.install) {
@@ -26,9 +27,9 @@ function install(window, document, settings) {
 
 function stringToBoolean(string){
     switch(string.toLowerCase().trim()){
-        case "true": case "yes": case "1": return true;
-        case "false": case "no": case "0": case null: return false;
-        default: return Boolean(string);
+    case "true": case "yes": case "1": return true;
+    case "false": case "no": case "0": case null: return false;
+    default: return Boolean(string);
     }
 }
 
@@ -44,24 +45,18 @@ function starter(window, document, settings, f) {
             settings[key] = value;
         }
     }
-    if (__USE_SERVICE_WORKERS__) {
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js', {scope: './'});
-            install(window, document, settings);
-        }
-    }
     const g = f(window, document, settings);
-    g.on("gameover", (score) => {
-        const btnAdd = document.getElementById('butInstall');
+    g.on("gameover", (/*score*/) => {
+        const btnAdd = document.getElementById("butInstall");
         btnAdd.classList.remove("hidden2");
     });
 }
 
 function launch(f, window, document, settings, afterUrlParse) {
-    if (document.readyState !== 'loading') {
+    if (document.readyState !== "loading") {
         f(window, document, settings, afterUrlParse);
     } else {
-        document.addEventListener("DOMContentLoaded", function (event) {
+        document.addEventListener("DOMContentLoaded", function () {
             f(window, document, settings, afterUrlParse);
         });
     }
@@ -71,7 +66,7 @@ export function launchWithUrlParse(window, document, settings, afterUrlParse) {
     launch(starter, window, document, settings, afterUrlParse);
 }
 
-export const playSound = (elem) => {
+export function playSound(elem) {
     if (!elem) return;
     elem.play();
 }
@@ -87,7 +82,7 @@ export function numAndDeclOfNum(number, titles) {
 
 export function initField(fieldSize, className, elem, document) {
     for (let i = 0; i < fieldSize; i++) {
-        const cell = document.createElement('div');
+        const cell = document.createElement("div");
         cell.className = className;
         elem.appendChild(cell);
     }

@@ -12,7 +12,7 @@ export default function idealMouse(size) {
                 positions.push(p);
             }
         }
-    }
+    };
     const hit = (r) => {
         const candidates = positions.filter((c) => c !== r);
         const newPositions = [];
@@ -23,12 +23,12 @@ export default function idealMouse(size) {
         prevPositions = positions;
         positions = newPositions;
         return positions.length === 0;
-    }
+    };
     const isMousePos = (i) => prevPositions.includes(i);
     const getPositions = () => positions;
     return {
         hit: hit,
         getPositions: getPositions,
         isMousePos: isMousePos
-    }
+    };
 }
