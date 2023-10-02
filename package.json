@@ -23,6 +23,7 @@
     "css-minimizer-webpack-plugin": "^5.0.1",
     "eslint": "^8.49.0",
     "esm": "^3.2.25",
+    "globals": "^13.22.0",
     "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",
     "npm-check-updates": "^16.14.4",
