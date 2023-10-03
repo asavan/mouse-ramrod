@@ -25,8 +25,8 @@ export function install(window, document, settings) {
     });
 }
 
-function stringToBoolean(string){
-    switch(string.toLowerCase().trim()){
+function stringToBoolean(string) {
+    switch (string.toLowerCase().trim()) {
     case "true": case "yes": case "1": return true;
     case "false": case "no": case "0": case null: return false;
     default: return Boolean(string);
@@ -56,7 +56,7 @@ function launch(f, window, document, settings, afterUrlParse) {
     if (document.readyState !== "loading") {
         f(window, document, settings, afterUrlParse);
     } else {
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", () => {
             f(window, document, settings, afterUrlParse);
         });
     }
@@ -67,7 +67,9 @@ export function launchWithUrlParse(window, document, settings, afterUrlParse) {
 }
 
 export function playSound(elem) {
-    if (!elem) return;
+    if (!elem) {
+        return;
+    }
     elem.play();
 }
 

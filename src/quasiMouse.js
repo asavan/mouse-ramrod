@@ -12,13 +12,15 @@ export default function quasiMouse(size) {
     add(positions, prevPos);
     add(positions, prevPos + 1);
 
-    const isFirstOrLast = (ind) => {
-        return ind === 0 || (ind === (size - 1));
-    };
+    const isFirstOrLast = (ind) => ind === 0 || (ind === (size - 1));
 
     const calcScore = (ind) => {
-        if (!inField(ind)) return 0;
-        if (isFirstOrLast(ind)) return 1;
+        if (!inField(ind)) {
+            return 0;
+        }
+        if (isFirstOrLast(ind)) {
+            return 1;
+        }
         return 2;
     };
 

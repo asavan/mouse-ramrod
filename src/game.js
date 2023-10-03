@@ -11,7 +11,9 @@ function stub() {
 const handleClick = function (evt, parent) {
     const getIndex = function (e, p) {
         for (let i = 0; i < p.children.length; i++) {
-            if (p.children[i] === e.target) return i;
+            if (p.children[i] === e.target) {
+                return i;
+            }
         }
         return -1;
     };
@@ -25,10 +27,13 @@ const handleClick = function (evt, parent) {
 
 function draw(presenter, box, message, settings) {
     // 🐭 🐁 🖯 🖰 🖱 🖱️ 🗿
-    const avMice = ["", "&#128045;", "&#128001;", "&#128431;", "&#128432;", "&#128433;", "&#128433;&#65039;", "&#128511;"];
+    const avMice = ["", "&#128045;", "&#128001;", "&#128431;", "&#128432;", "&#128433;",
+        "&#128433;&#65039;", "&#128511;"];
+
     // 🕳 🔨 🪓 ⛏ 🗡 🔪 🔧 📌 🪠 🪄
     const avRamrod = ["&#128371;", "&#128296;", "&#129683;", "&#9935;", "&#128481;", "&#128298;",
         "&#128295;", "&#128204;", "&#129696;", "&#129668;"];
+
     // 🪤 💥 🎆 ⚰️
     const avCollision = ["&#129700;", "&#128165;", "&#127878;", "&#9904;&#65039;"];
 
@@ -75,7 +80,8 @@ export default function game(window, document, settings) {
         "ramrod": stub
     };
 
-    const miceFunc = [idealMouse, quasiMouseFunc, quasiMouseFunc, randomMouse, quasiMouseFunc, idealMouse, randomMouse, quasiMouseFunc];
+    const miceFunc = [idealMouse, quasiMouseFunc, quasiMouseFunc,
+        randomMouse, quasiMouseFunc, idealMouse, randomMouse, quasiMouseFunc];
 
     const g = engine(settings.size, miceFunc[settings.mouse]);
 
@@ -122,7 +128,7 @@ export default function game(window, document, settings) {
     };
 
     box.addEventListener("click", handleBox, false);
-    close.addEventListener("click", function (e) {
+    close.addEventListener("click", (e) => {
         e.preventDefault();
         overlay.classList.remove("show");
     }, false);
