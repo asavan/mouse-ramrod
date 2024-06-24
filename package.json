@@ -1,38 +1,38 @@
 {
   "name": "mouse-ramrod-web",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "description": "Deadly game of mouse and ramrod",
   "type": "module",
-  "ava": {
-    "require": [
-      "esm"
-    ]
-  },
+  "sideEffects": false,
   "scripts": {
     "start": "webpack serve --mode development --color",
     "build": "webpack --mode production",
-    "style": "npx eslint . && npx stylelint \"**/*.css\"",
-    "style:fix": "npx eslint . --fix && npx stylelint \"**/*.css\" --fix",
-    "test": "ava"
+    "style": "npx eslint . -c linters/eslint.config.js",
+    "style:fix": "npx eslint . -c linters/eslint.config.js --fix",
+    "style2": "npx stylelint --config linters/.stylelintrc.json \"src/**/*.css\"",
+    "style2:fix": "npx stylelint --config linters/.stylelintrc.json \"src/**/*.css\" --fix",
+    "test": "ava",
+    "updates": "npx ncu",
+    "updates:fix": "npx ncu -u && npm install"
   },
   "devDependencies": {
-    "ava": "^5.3.1",
-    "copy-webpack-plugin": "^11.0.0",
-    "css-loader": "^6.8.1",
-    "css-minimizer-webpack-plugin": "^5.0.1",
-    "eslint": "^8.49.0",
-    "esm": "^3.2.25",
-    "globals": "^13.22.0",
-    "html-webpack-plugin": "^5.5.3",
-    "mini-css-extract-plugin": "^2.7.6",
-    "npm-check-updates": "^16.14.4",
-    "stylelint": "^15.10.3",
-    "stylelint-config-standard": "^34.0.0",
-    "terser-webpack-plugin": "^5.3.9",
-    "webpack": "^5.88.2",
+    "@stylistic/eslint-plugin-js": "^2.2.2",
+    "ava": "^6.1.3",
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^7.1.2",
+    "css-minimizer-webpack-plugin": "^7.0.0",
+    "eslint": "^9.5.0",
+    "globals": "^15.6.0",
+    "html-webpack-plugin": "^5.6.0",
+    "mini-css-extract-plugin": "^2.9.0",
+    "npm-check-updates": "^16.14.20",
+    "stylelint": "^16.6.1",
+    "stylelint-config-standard": "^36.0.1",
+    "terser-webpack-plugin": "^5.3.10",
+    "webpack": "^5.92.1",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1",
-    "workbox-webpack-plugin": "^7.0.0"
+    "webpack-dev-server": "^5.0.4",
+    "workbox-webpack-plugin": "^7.1.0"
   }
 }
