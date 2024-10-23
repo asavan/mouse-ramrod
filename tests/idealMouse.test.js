@@ -1,4 +1,4 @@
-import idealMouse from "../src/idealMouse.js";
+import idealMouse from "../src/js/idealMouse.js";
 import test from "ava";
 
 function testFunc(t, hits, expected) {

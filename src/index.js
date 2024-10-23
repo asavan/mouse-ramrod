@@ -1,8 +1,8 @@
 "use strict";
 
-import settings from "./settings.js";
-import gameFunction from "./game.js";
-import {install, launchWithUrlParse} from "./helper.js";
+import settings from "./js/settings.js";
+import gameFunction from "./js/game.js";
+import {install, launchWithUrlParse} from "./js/helper.js";
 
 // eslint-disable-next-line no-undef
 if (__USE_SERVICE_WORKERS__) {
