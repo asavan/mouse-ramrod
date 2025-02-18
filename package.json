@@ -1,6 +1,6 @@
 {
   "name": "mouse-ramrod-web",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
   "description": "Deadly game of mouse and ramrod",
   "type": "module",
