@@ -1,50 +1,8 @@
-"use strict";
+import {addSettingsButton, parseSettings} from "netutils";
 
-export function install(window, document, settings) {
-    const btnAdd = document.getElementById("butInstall");
-    let deferredPrompt = null;
-    btnAdd.addEventListener("click", (e) => {
-        e.preventDefault();
-        // hide our user interface that shows our A2HS button
-        // btnAdd.setAttribute('disabled', true);
-        btnAdd.classList.add("hidden");
-        // Show the prompt
-        deferredPrompt.prompt();
-        // Wait for the user to respond to the prompt
-        deferredPrompt.userChoice.then((resp) => {
-            console.log(JSON.stringify(resp));
-        });
-    });
-
-    window.addEventListener("beforeinstallprompt", (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        if (settings && settings.install) {
-            btnAdd.classList.remove("hidden");
-        }
-    });
-}
-
-function stringToBoolean(string) {
-    switch (string.toLowerCase().trim()) {
-    case "true": case "yes": case "1": return true;
-    case "false": case "no": case "0": case null: return false;
-    default: return Boolean(string);
-    }
-}
-
-function starter(window, document, settings, f) {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    for (const [key, value] of urlParams) {
-        if (typeof settings[key] === "number") {
-            settings[key] = parseInt(value, 10);
-        } else if (typeof settings[key] === "boolean") {
-            settings[key] = stringToBoolean(value);
-        } else {
-            settings[key] = value;
-        }
-    }
+export function starter(window, document, settings, f) {
+    parseSettings(window.location.search, settings);
+    addSettingsButton(document, settings);
     const g = f(window, document, settings);
     g.on("gameover", (/*score*/) => {
         const btnAdd = document.getElementById("butInstall");
@@ -52,21 +10,8 @@ function starter(window, document, settings, f) {
     });
 }
 
-function launch(f, window, document, settings, afterUrlParse) {
-    if (document.readyState !== "loading") {
-        f(window, document, settings, afterUrlParse);
-    } else {
-        document.addEventListener("DOMContentLoaded", () => {
-            f(window, document, settings, afterUrlParse);
-        });
-    }
-}
-
-export function launchWithUrlParse(window, document, settings, afterUrlParse) {
-    launch(starter, window, document, settings, afterUrlParse);
-}
-
 export function playSound(elem) {
+    console.log("play", elem);
     if (!elem) {
         return;
     }

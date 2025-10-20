@@ -12,7 +12,20 @@
     <link rel="apple-touch-icon" href="./images/antimouse1.png">
 </head>
 <body>
-<div class="content">
+<section class="menu">
+    <div id="control-panel" class="control-panel minimized">
+        <div class="panel-header">
+            <!--⛶ ⤭ ◱ 🗖 🗖 -->
+            <button id="butInstall" title="install" class="hidden hidden2 contrl-btn butInstall">↓</button>
+            <button id="resize-btn" title="fullscreen" class="contrl-btn resize-btn">⤱</button>
+            <button id="maximize-btn" title="Maximize Panel" class="contrl-btn maximize-btn">⚙</button>
+            <button title="Rules" class="help-btn contrl-btn circled" popovertarget="myModal"></button>
+        </div>
+        <div class="panel-content"></div>
+    </div>
+    <div class="video-barcode"></div>
+</section>
+<section class="content">
     <div class="box"></div>
     <div class="message"></div>
     <div class="overlay">
@@ -24,9 +37,17 @@
             </div>
         </div>
     </div>
-</div>
+</section>
+<dialog popover id="myModal" >
+    <p id="modalContent">
+        Перед вами пять мышиных норок, расположенных в ряд. <br>
+        В одной из этих норок спряталась мышка. <br>
+        Вы можете засунуть шомпол в любую из норок и попробовать убить мышку. <br>
+        Мышка боится шомпола, поэтому после каждой попытки обязательно перебегает в соседнюю норку справа или слева. Можете ли вы гарантированно размазжить мышку? Если да, то как действовать? Если нет, то как действовать мышке?
+    </p>
+</dialog>
 <footer>
-    <button id="butInstall" class="butInstall install hidden hidden2">Install as app</button>
+    <audio id="tada" class="hidden" src="./sounds/windows-98-sound-tada.mp3" preload="none"></audio>
 </footer>
 </body>
 </html>

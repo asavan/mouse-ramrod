@@ -2,7 +2,8 @@
 
 import settings from "./js/settings.js";
 import gameFunction from "./js/game.js";
-import {install, launchWithUrlParse} from "./js/helper.js";
+import {starter} from "./js/helper.js";
+import {install} from "netutils";
 
 // eslint-disable-next-line no-undef
 if (__USE_SERVICE_WORKERS__) {
@@ -12,4 +13,4 @@ if (__USE_SERVICE_WORKERS__) {
     }
 }
 
-launchWithUrlParse(window, document, settings, gameFunction);
+starter(window, document, settings, gameFunction);

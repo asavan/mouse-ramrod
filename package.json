@@ -17,6 +17,14 @@
     "updates": "npx ncu",
     "updates:fix": "npx ncu -u && npm install"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asavan/mouse-ramrod.git"
+  },
+  "homepage": "https://asavan.github.io/mouse-ramrod/",
+  "dependencies": {
+    "netutils": "github:asavan/netutils#219b86f41379e8ddb512b5a10676d8a161e3de1c"
+  },
   "devDependencies": {
     "ava": "^6.2.0",
     "devdeps": "github:asavan/dev-deps#v0.0.5"

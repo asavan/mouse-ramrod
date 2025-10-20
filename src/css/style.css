@@ -37,21 +37,6 @@ footer {
     grid-template-columns: repeat(var(--field-size), 1fr);
 }
 
-.install {
-    background-color: var(--main-color);
-    text-align: center;
-    font: bold 24px/100px Tahoma, sans-serif;
-    height: 100px;
-    width: 100%;
-    cursor: pointer;
-    border: 0;
-    padding: 0;
-}
-
-.hidden {
-    display: none;
-}
-
 img {
     max-width: 100%;
     display: block;
@@ -202,4 +187,121 @@ img {
     max-height: 30%;
     font-size: 1.2rem;
     overflow: auto;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    align-items: center;
+    gap: 3px;
+}
+
+.relative {
+    position: relative;
+}
+
+.control-panel {
+    top: 10px;
+    right: 10px;
+    background-color: #323232;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    font-family: sans-serif;
+    display: flex;
+    z-index: 2;
+    flex-direction: column;
+    min-width: 320px;
+    transition: min-height 0.3s ease, padding 0.3s ease, min-width 0.3s ease;
+    gap: 5px;
+}
+
+.control-panel.minimized {
+    min-width: auto;
+    min-height: auto;
+    gap: 0;
+    display: block !important;
+    margin-left: 0;
+    padding: 5px;
+    outline: none;
+    outline-offset: 2px;
+    border-radius: 3px;
+}
+
+.contrl-btn {
+    font-family: Cambria, Georgia, serif;
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    overflow: hidden;
+    font-size: 2rem;
+    padding: 0 3px;
+}
+
+.control-panel button:not(:disabled):active {
+    background-color: #7a7a7a;
+    transform: translateY(1px);
+}
+
+.control-panel button:not(:disabled):hover { background-color: #686868; }
+
+/* Стили для формы, созданной функцией createFormBinder */
+
+.formbinder-form {
+    /* Стили для формы в целом */
+}
+
+.formbinder-field-container {
+    margin: 10px 0;
+}
+
+.formbinder-label {
+    display: inline-block;
+    width: 120px;
+}
+
+.formbinder-error {
+    color: red;
+}
+
+
+dialog {
+    border: none;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgb(0 0 0 / 20%);
+}
+
+dialog::backdrop {
+    background-color: rgb(0 0 0 / 50%);
+}
+
+.circled {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+}
+
+.circled::before {
+    content: "";
+    grid-area: 1 / 1;
+    width: 35px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.circled::after {
+    content: "?";
+    grid-area: 1 / 1;
+}
+
+.hidden {
+    display: none;
 }
