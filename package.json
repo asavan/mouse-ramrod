@@ -26,7 +26,7 @@
     "netutils": "github:asavan/netutils#219b86f41379e8ddb512b5a10676d8a161e3de1c"
   },
   "devDependencies": {
-    "ava": "^6.2.0",
+    "ava": "^6.4.1",
     "devdeps": "github:asavan/dev-deps#v0.0.5"
   }
 }
