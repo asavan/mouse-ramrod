@@ -1,12 +1,14 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+
 import idealMouse from "../src/js/idealMouse.js";
-import test from "ava";
 
 function testFunc(t, hits, expected) {
     const mouse = idealMouse(5);
     for (const h of hits) {
         mouse.hit(h - 1);
     }
-    t.deepEqual(mouse.getPositions().map(i => i+1).sort(), expected);
+    assert.deepStrictEqual(mouse.getPositions().map(i => i+1).sort(), expected);
 }
 
 test("one position left", (t) => {

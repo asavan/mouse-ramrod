@@ -1,4 +1,6 @@
-import test from "ava";
+import test from "node:test";
+import assert from "node:assert/strict";
+
 import quasiMouse from "../src/js/quasiMouse.js";
 
 function testFunc(t, hits, expected) {
@@ -6,9 +8,8 @@ function testFunc(t, hits, expected) {
     for (const h of hits) {
         mouse.hit(h - 1);
     }
-    t.deepEqual(mouse.getPrevPos(), expected);
+    assert.deepStrictEqual(mouse.getPrevPos(), expected);
 }
-
 
 test("hit in 3", (t) => {
     const hits = [3];
