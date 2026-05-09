@@ -22,6 +22,8 @@ export function initField(fieldSize, className, elem, document) {
     for (let i = 0; i < fieldSize; i++) {
         const cell = document.createElement("div");
         cell.className = className;
+        const num = i + 1;
+        cell.dataset.num = num;
         elem.appendChild(cell);
     }
 }

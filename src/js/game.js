@@ -5,21 +5,18 @@ import quasiMouseFunc from "./quasiMouse.js";
 import randomMouse from "./randomMouse.js";
 import {delay, detectLangByBrowser, translator, handlersFunc} from "netutils";
 
-const handleClick = function (evt, parent) {
-    const getIndex = function (e, p) {
-        for (let i = 0; i < p.children.length; i++) {
-            if (p.children[i] === e.target) {
-                return i;
-            }
-        }
-        return -1;
+const handleClick = function (evt) {
+    const getIndex = function (e) {
+        const target = e.target || e.srcElement;
+        const cand = Number.parseInt(target.dataset.num, 10);
+        return cand - 1;
     };
 
     evt.preventDefault();
     if (!evt.target.classList.contains("cell")) {
         return -1;
     }
-    return getIndex(evt, parent);
+    return getIndex(evt);
 };
 
 async function draw(presenter, box, message, settings, trans) {
@@ -148,7 +145,7 @@ export default function game(window, document, settings) {
     drawWithAnimation();
 
     const handleBox = function (evt) {
-        const ind = handleClick(evt, box);
+        const ind = handleClick(evt);
         if (g.tryMoveToIndex(ind)) {
             nextStep();
         }
