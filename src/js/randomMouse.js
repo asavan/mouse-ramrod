@@ -1,14 +1,8 @@
-function randomIndex(length) {
-    return Math.floor(Math.random() * length);
-}
-
-function randomElem(arr) {
-    return arr[randomIndex(arr.length)];
-}
+import {random} from "netutils";
 
 export default function randomMouse(size) {
     const inField = (x) => x >= 0 && x < size;
-    let posX = randomIndex(size);
+    let posX = random.randomInteger(0, size, Math.random);
     let prevPos = -1;
     const mouseDirections = [-1, 1];
     const getPos = () => posX;
@@ -27,7 +21,7 @@ export default function randomMouse(size) {
         if (availablePos.length === 0) {
             return true;
         }
-        posX = randomElem(availablePos);
+        posX = random.randomEl(availablePos);
         return false;
     };
     const isMousePos = (i) => i === prevPos;
