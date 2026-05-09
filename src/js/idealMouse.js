@@ -1,4 +1,3 @@
-"use strict";
 export default function idealMouse(size) {
     const inField = (x) => x >= 0 && x < size;
     let positions = [];

@@ -1,4 +1,3 @@
-"use strict";
 export default function quasiMouse(size) {
     const inField = (x) => x >= 0 && x < size;
     let prevPos = Math.floor((size - 1) / 2);

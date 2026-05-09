@@ -1,0 +1,8 @@
+{
+  "game": "Mouse ramrod",
+  "description": "Mouse ramrod game",
+  "catch": "Gotcha!",
+  "in": "In",
+  "move": "move",
+  "rules": "You see five mouse holes in a row.\nA mouse is hiding in one of these holes.\nYou can stick a cleaning rod into any of the holes and try to kill the mouse.\nThe mouse is afraid of the cleaning rod, so after each attempt, it inevitably runs to the next hole to the right or left. Can you guarantee to kill the mouse? If so, what should you do? If not, what should the mouse do?"
+}
