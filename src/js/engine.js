@@ -1,4 +1,4 @@
-export default function engine(size, mouseFunc) {
+export default function engine(size, mouseFunc, allowedGap) {
     let moveCount = 0;
     let isMouseMove = false;
     let ramrod = -1;
@@ -6,8 +6,12 @@ export default function engine(size, mouseFunc) {
     let showMousePos = false;
     const inField = (x) => x >= 0 && x < size;
     const iMouse = mouseFunc(size);
+    const movesOptimal = 2 * (size - 2);
+    const movesThreshold = movesOptimal + allowedGap;
 
     const getMoveCount = () => moveCount;
+
+    const isTooManyMoves = () => moveCount > movesThreshold;
 
     const isWin = () => iswin;
 
@@ -42,12 +46,13 @@ export default function engine(size, mouseFunc) {
     };
 
     return {
-        isWin: isWin,
-        tryMoveToIndex: tryMoveToIndex,
-        getMoveCount: getMoveCount,
-        isRamrodPos: isRamrodPos,
-        isMousePos: isMousePos,
-        setShowMousePos: setShowMousePos,
-        mouseMove: mouseMove
+        isTooManyMoves,
+        isWin,
+        tryMoveToIndex,
+        getMoveCount,
+        isRamrodPos,
+        isMousePos,
+        setShowMousePos,
+        mouseMove
     };
 }

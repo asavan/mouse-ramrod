@@ -6,7 +6,9 @@
 
 :root {
     --main-color: #F0F8FF;
-    --main-inc-color: #8a2be2;
+    --purple-color: #8a2be2;
+    --main-inc-color: green;
+    --too-many-inc-color: red;
     --field-size: 5;
 }
 
@@ -60,6 +62,10 @@ img {
     font-size: 90px;
     font-style: italic;
     display: inline-block;
+}
+
+.message.too-many {
+    color: var(--too-many-inc-color);
 }
 
 .cell div,span {
@@ -246,7 +252,7 @@ dialog::backdrop {
     }
 
     .message {
-        font-size: 30px;
+        font-size: 50px;
     }
 }
 

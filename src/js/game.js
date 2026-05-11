@@ -1,9 +1,8 @@
-import {playSound, initField} from "./helper.js";
 import engine from "./engine.js";
 import idealMouse from "./idealMouse.js";
 import quasiMouseFunc from "./quasiMouse.js";
 import randomMouse from "./randomMouse.js";
-import {delay, detectLangByBrowser, translator, handlersFunc} from "netutils";
+import {delay, handlersFunc} from "netutils";
 
 const handleClick = function (evt) {
     const getIndex = function (e) {
@@ -55,32 +54,34 @@ async function draw(presenter, box, message, settings, trans) {
     }
     if (message && presenter.getMoveCount()) {
         message.textContent = await trans.pluralise("move", presenter.getMoveCount());
+        if (presenter.isTooManyMoves()) {
+            message.classList.add("too-many");
+        } else {
+            message.classList.remove("too-many");
+        }
     }
 }
 
-function localeLoader() {
-    return {
-        "en": async () => {
-            const module = await import("../locales/en.json", {
-                with: {
-                    type: "json"
-                }
-            });
-            return module.default;
-        },
-        "ru": async () => {
-            const module = await import("../locales/ru.json", {
-                with: {
-                    type: "json"
-                }
-            });
-            return module.default;
-        }
-    };
+function playSound(elem) {
+    console.log("play", elem);
+    if (!elem) {
+        return;
+    }
+    elem.play();
+}
+
+function initField(fieldSize, className, elem, document) {
+    for (let i = 0; i < fieldSize; i++) {
+        const cell = document.createElement("div");
+        cell.className = className;
+        const num = i + 1;
+        cell.dataset.num = num;
+        elem.appendChild(cell);
+    }
 }
 
 
-export default function game(window, document, settings) {
+export default function game(window, document, settings, trans) {
 
     const box = document.querySelector(".box");
     const message = document.querySelector(".message");
@@ -90,9 +91,6 @@ export default function game(window, document, settings) {
 
     document.documentElement.style.setProperty("--field-size", settings.size);
 
-    const lang = settings.lang || detectLangByBrowser(window);
-
-    const trans = translator(lang, localeLoader());
     trans.warmUp().then(async () => {
         const rulesEl = document.querySelector(".rules");
         rulesEl.innerHTML = (await trans.t("rules")).replaceAll("\n", "<br>");
@@ -109,7 +107,7 @@ export default function game(window, document, settings) {
     const miceFunc = [idealMouse, quasiMouseFunc, quasiMouseFunc,
         randomMouse, quasiMouseFunc, idealMouse, randomMouse, quasiMouseFunc];
 
-    const g = engine(settings.size, miceFunc[settings.mouse]);
+    const g = engine(settings.size, miceFunc[settings.mouse], settings.allowedGap);
 
     async function onGameEnd() {
         const content = overlay.querySelector(".content");

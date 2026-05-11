@@ -4,5 +4,5 @@
   "catch": "Gotcha!",
   "in": "In",
   "move": "move",
-  "rules": "You see five mouse holes in a row.\nA mouse is hiding in one of these holes.\nYou can stick a cleaning rod into any of the holes and try to kill the mouse.\nThe mouse is afraid of the cleaning rod, so after each attempt, it inevitably runs to the next hole to the right or left. Can you guarantee to kill the mouse? If so, what should you do? If not, what should the mouse do?"
+  "rules": "You see five mouse holes in a row.\nA mouse is hiding in one of these holes.\nYou can smash any hole with a huge hummer.\nIf a mouse was in that hole, it dies immediately.\nThe mouse is afraid of the hummer, so after each attempt, it inevitably runs to the next closest hole to the right or left.\n Can you guarantee to kill the mouse in finite number of moves?"
 }

@@ -4,6 +4,7 @@ export default {
     ramrod: 1,
     collision: 1,
     size: 5,
+    allowedGap: 2,
     lang: "",
     sound: false
 };
